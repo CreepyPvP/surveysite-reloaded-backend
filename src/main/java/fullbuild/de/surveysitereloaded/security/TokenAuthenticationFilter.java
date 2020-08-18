@@ -28,15 +28,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-
         try {
             Authentication authentication = tokenManager.getAuthentication(token);
-
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (InvalidTokenException e) {
             // Token invalid or expired
-
-            //TODO request login
         }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);

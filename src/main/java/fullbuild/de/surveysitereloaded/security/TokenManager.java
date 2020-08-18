@@ -7,6 +7,7 @@ import fullbuild.de.surveysitereloaded.security.model.TokenModel;
 import fullbuild.de.surveysitereloaded.security.model.TokenRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 
@@ -35,6 +36,8 @@ public class TokenManager {
     }
 
     public AuthenticationToken getTokenOrNew(User user) {
+        checkExpired(user);
+
         Optional<TokenModel> userTokenOptional = tokenRepository.findByUser(user);
         if(userTokenOptional.isPresent()) {
             return userTokenOptional.get().toAuthenticationToken();
@@ -44,6 +47,7 @@ public class TokenManager {
     }
 
     public AuthenticationToken getAuthentication(String token) throws InvalidTokenException {
+        checkExpired(token);
         return tokenRepository.findByToken(token).orElseThrow(InvalidTokenException::new).toAuthenticationToken();
     }
 
@@ -51,12 +55,12 @@ public class TokenManager {
         return tokenRepository.existsByToken(authenticationToken.getToken());
     }
 
-    public void invalidateToken(AuthenticationToken token) {
-        if(!exists(token)){
-            return;
-        }
+    private void checkExpired(String token) {
+        tokenRepository.deleteByTokenAndExpirationDateBefore(token, new Date());
+    }
 
-        tokenRepository.deleteById(token.getToken());
+    private void checkExpired(User user) {
+        tokenRepository.deleteByUserAndExpirationDateBefore(user, new Date());
     }
 
     //------------------------------------------------------
