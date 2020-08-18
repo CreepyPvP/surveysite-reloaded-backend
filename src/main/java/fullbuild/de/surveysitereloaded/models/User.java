@@ -1,5 +1,6 @@
 package fullbuild.de.surveysitereloaded.models;
 
+import fullbuild.de.surveysitereloaded.configs.UserDetailsModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,17 @@ public class User {
     @GeneratedValue
     private int id;
     
-    private String username;
+    private String username = "error";
+
+    private String password = "error";
 
     public List<SimpleGrantedAuthority> getAuthorities() {
         return new ArrayList<SimpleGrantedAuthority>();
+    }
+
+
+    public UserDetailsModel toUserDetails() {
+        return new UserDetailsModel(this);
     }
 
 }

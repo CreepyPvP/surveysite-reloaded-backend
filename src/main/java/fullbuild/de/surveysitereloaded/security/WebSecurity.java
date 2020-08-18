@@ -1,6 +1,8 @@
 package fullbuild.de.surveysitereloaded.security;
 
 
+import fullbuild.de.surveysitereloaded.configs.UserManager;
+import fullbuild.de.surveysitereloaded.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
