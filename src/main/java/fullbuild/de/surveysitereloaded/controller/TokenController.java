@@ -2,8 +2,10 @@ package fullbuild.de.surveysitereloaded.controller;
 
 import fullbuild.de.surveysitereloaded.dto.TokenDTO;
 import fullbuild.de.surveysitereloaded.repositories.UserRepository;
+import fullbuild.de.surveysitereloaded.security.AuthenticationToken;
 import fullbuild.de.surveysitereloaded.security.TokenManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,4 +23,14 @@ public class TokenController  {
     public TokenDTO getToken(Authentication authentication) {
         return new TokenDTO(tokenManager.getNewToken(userRepository.findByUsername(authentication.getName()).orElseThrow(RuntimeException::new)));
     }
+
+    @GetMapping("/validate")
+    public ResponseEntity<TokenDTO> validateToken(Authentication authentication) {
+        if(authentication instanceof AuthenticationToken) {
+            return ResponseEntity.ok().body(new TokenDTO((AuthenticationToken) authentication));
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
 }
