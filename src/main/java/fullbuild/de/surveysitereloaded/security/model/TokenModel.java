@@ -16,11 +16,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class TokenModel {
 
-    /**
-     * tokens are valid for TOKEN_EXPIRATION_TIME_DAYS days
-     */
-    public static final int TOKEN_EXPIRATION_TIME_DAYS = 4;
-
 
     @Id
     private String token;
@@ -28,17 +23,16 @@ public class TokenModel {
     @OneToOne
     private User user;
 
-    private Date expirationDate = new Date();
+    private Date expirationDate;
 
     public TokenModel(AuthenticationToken authenticationToken) {
         this.token = authenticationToken.getToken();
         this.user = authenticationToken.getUser();
-        this.expirationDate = new Date();
-        this.expirationDate.setTime(this.expirationDate.getTime() + TOKEN_EXPIRATION_TIME_DAYS * 24 * 60 * 60 * 1000);
+        this.expirationDate = authenticationToken.getExpirationDate();
     }
 
     public AuthenticationToken toAuthenticationToken() {
-        return new AuthenticationToken(token, user);
+        return new AuthenticationToken(token, user, expirationDate);
     }
 
 }
