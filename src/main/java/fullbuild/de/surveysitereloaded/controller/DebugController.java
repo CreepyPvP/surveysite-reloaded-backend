@@ -1,5 +1,6 @@
 package fullbuild.de.surveysitereloaded.controller;
 
+import fullbuild.de.surveysitereloaded.models.PermissionRank;
 import fullbuild.de.surveysitereloaded.models.User;
 import fullbuild.de.surveysitereloaded.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,9 @@ public class DebugController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PermissionRank defaultPermissionRank;
 
     private final UserRepository userRepository;
 

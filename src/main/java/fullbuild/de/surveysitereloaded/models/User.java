@@ -28,7 +28,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     
     private String username = "error";
@@ -39,7 +39,7 @@ public class User {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<TokenModel> tokenModel = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private PermissionRank permissionRank;
 
 

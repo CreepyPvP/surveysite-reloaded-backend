@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PermissionRankRepository extends CrudRepository<PermissionRank, String> {
+public interface PermissionRankRepository extends CrudRepository<PermissionRank, Integer> {
 
     Optional<PermissionRank> findByName(String name);
 

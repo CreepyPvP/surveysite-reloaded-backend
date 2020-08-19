@@ -2,7 +2,9 @@ package fullbuild.de.surveysitereloaded;
 
 public enum Permission {
 
-    WILDCARD;
+    WILDCARD,
+    READ_BASIC,
+    CREATE_THREAD_BASIC;
 
 
     //
