@@ -10,13 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.Optional;
 import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
 public class TokenManager {
 
+    private static final int MAX_TOKEN_PER_USER = 5;
     private static final int TOKEN_LENGTH = 15;
     private static final String ALLOWED_CHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
 
@@ -25,6 +25,11 @@ public class TokenManager {
 
 
     public AuthenticationToken createToken(User user) {
+        // to prevent spam
+        if(tokenRepository.countByUser(user) >= MAX_TOKEN_PER_USER) {
+            hardLogout(user);
+        }
+
         String token = "";
         do {
             token = generateToken();
@@ -60,6 +65,16 @@ public class TokenManager {
 
     private void checkExpired(User user) {
         tokenRepository.deleteByUserAndExpirationDateBefore(user, new Date());
+    }
+
+
+    private void logout(String token) {
+        tokenRepository.deleteByToken(token);
+    }
+
+    // Logs out from all devices
+    private void hardLogout(User user) {
+        tokenRepository.deleteAllByUser(user);
     }
 
     //------------------------------------------------------

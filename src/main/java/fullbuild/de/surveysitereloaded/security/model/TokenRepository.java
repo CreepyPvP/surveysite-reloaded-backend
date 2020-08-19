@@ -10,10 +10,16 @@ import java.util.Optional;
 
 public interface TokenRepository extends CrudRepository<TokenModel, String> {
 
-    Optional<TokenModel> findByUser(User user);
+    int countByUser(User user);
     Optional<TokenModel> findByToken(String token);
 
     boolean existsByToken(String token);
+
+    @Transactional
+    void deleteAllByUser(User user);
+
+    @Transactional
+    void deleteByToken(String token);
 
     @Transactional
     void deleteAllByExpirationDateBefore(Date now);
