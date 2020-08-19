@@ -19,6 +19,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -44,7 +45,7 @@ public class User {
 
 
     public List<SimpleGrantedAuthority> getAuthorities() {
-        return new ArrayList<SimpleGrantedAuthority>();
+        return permissionRank.getAuthorities().stream().map(permission -> new SimpleGrantedAuthority(permission.toString())).collect(Collectors.toList());
     }
 
     public UserDetailsModel toUserDetails() {
