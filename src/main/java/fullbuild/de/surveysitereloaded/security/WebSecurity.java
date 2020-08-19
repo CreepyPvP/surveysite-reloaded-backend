@@ -3,6 +3,7 @@ package fullbuild.de.surveysitereloaded.security;
 
 import fullbuild.de.surveysitereloaded.configs.UserManager;
 import fullbuild.de.surveysitereloaded.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,18 +24,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    //private final BasicRequestAuthenticationEntryPoint authenticationEntryPoint;
     private final TokenAuthenticationProvider tokenAuthenticationProvider;
     private final UserRepository userRepository;
     private final TokenManager tokenManager;
 
-    public WebSecurity(UserRepository userRepository, TokenAuthenticationProvider tokenAuthenticationProvider, TokenManager tokenManager) {
-        this.userRepository = userRepository;
-        this.tokenAuthenticationProvider = tokenAuthenticationProvider;
-        this.tokenManager = tokenManager;
-    }
 
     @Override
     public void configure(org.springframework.security.config.annotation.web.builders.WebSecurity web) throws Exception {

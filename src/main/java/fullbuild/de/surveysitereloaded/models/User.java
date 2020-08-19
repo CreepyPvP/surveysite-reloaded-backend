@@ -3,6 +3,7 @@ package fullbuild.de.surveysitereloaded.models;
 import fullbuild.de.surveysitereloaded.configs.UserDetailsModel;
 import fullbuild.de.surveysitereloaded.security.model.TokenModel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +19,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User {
 
     @Id
