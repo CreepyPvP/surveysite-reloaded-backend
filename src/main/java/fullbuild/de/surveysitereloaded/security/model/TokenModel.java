@@ -32,4 +32,13 @@ public class TokenModel {
         return new AuthenticationToken(token, user, expirationDate);
     }
 
+    @Override
+    public String toString() {
+        return "{\n" +
+                "   token: " + token + ",\n" +
+                "   user: " + user.getUsername() + ",\n" +
+                "   expirationDate: " + expirationDate + "\n" +
+                "}";
+    }
+
 }

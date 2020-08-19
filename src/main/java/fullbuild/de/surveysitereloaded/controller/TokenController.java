@@ -27,6 +27,7 @@ public class TokenController  {
     @GetMapping("/validate")
     public ResponseEntity<TokenDTO> validateToken(Authentication authentication) {
         if(authentication instanceof AuthenticationToken) {
+            System.out.println(((AuthenticationToken) authentication).getUser());
             return ResponseEntity.ok().body(new TokenDTO((AuthenticationToken) authentication));
         } else {
             return ResponseEntity.badRequest().body(null);

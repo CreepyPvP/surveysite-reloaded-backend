@@ -26,6 +26,7 @@ public class DebugController {
                 .username("Bob")
                 .password(passwordEncoder.encode("hello"))
                 .build();
+        bob.init();
         userRepository.save(bob);
         return ResponseEntity.ok().body(bob);
     }
