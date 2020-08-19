@@ -8,10 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +27,8 @@ public class User {
 
     private String password = "error";
 
-    @OneToOne
-    private TokenModel tokenModel = null;
+    @OneToMany(mappedBy = "user")
+    private List<TokenModel> tokenModel = new ArrayList<>();
 
 
     public List<SimpleGrantedAuthority> getAuthorities() {

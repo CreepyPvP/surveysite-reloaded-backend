@@ -5,10 +5,7 @@ import fullbuild.de.surveysitereloaded.security.AuthenticationToken;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -20,7 +17,7 @@ public class TokenModel {
     @Id
     private String token;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     private Date expirationDate;
