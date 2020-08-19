@@ -18,6 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +46,11 @@ public class User {
 
 
     public List<SimpleGrantedAuthority> getAuthorities() {
+        if(permissionRank.getAuthorities().contains(Permission.WILDCARD)) {
+            List<Permission> allPermissions = new ArrayList<>(Arrays.asList(Permission.values()));
+            return allPermissions.stream().map(permission -> new SimpleGrantedAuthority(permission.toString())).collect(Collectors.toList());
+        }
+
         return permissionRank.getAuthorities().stream().map(permission -> new SimpleGrantedAuthority(permission.toString())).collect(Collectors.toList());
     }
 
